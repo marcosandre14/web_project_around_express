@@ -2,27 +2,50 @@
 
 ## Descrição do Projeto
 
-Este é o projeto back-end para a aplicação "EUA Afora", desenvolvido com Node.js e Express. A API é responsável por servir dados mockados de usuários e cartões de fotos através de arquivos JSON, tratando rotas e lidando com erros de requisição de forma assíncrona.
+Este é o projeto back-end para a aplicação "EUA Afora", desenvolvido com Node.js, Express e MongoDB. A API fornece um ecossistema completo de persistência de dados para utilizadores e cartões de fotos, seguindo estritamente a arquitetura MVC (Model-View-Controller) e as boas práticas de desenvolvimento de software.
 
-## Funcionalidades
+## Funcionalidades Principais
 
-- **GET /users**: Retorna a lista com todos os usuários cadastrados.
-- **GET /users/:id**: Retorna as informações de um usuário específico pelo seu ID único.
-- **GET /cards**: Retorna a lista de cartões/lugares cadastrados.
-- **Tratamento de Erros**: Respostas com códigos HTTP 404 para rotas ou IDs inexistentes e 500 para erros internos do servidor.
+- **Utilizadores:**
+  - `GET /users`: Retorna a lista de todos os utilizadores.
+  - `GET /users/:userId`: Retorna um utilizador específico pelo ID.
+  - `POST /users`: Cria um novo utilizador com validações de esquema.
+  - `PATCH /users/me`: Atualiza o perfil do utilizador (nome e descrição).
+  - `PATCH /users/me/avatar`: Atualiza o avatar do utilizador.
+
+- **Cartões:**
+  - `GET /cards`: Retorna todos os cartões cadastrados (populando os dados do proprietário).
+  - `POST /cards`: Cria um novo cartão associado a um proprietário.
+  - `DELETE /cards/:cardId`: Remove um cartão pelo ID.
+  - `PUT /cards/:cardId/likes`: Adiciona uma curtida num cartão (com operador `$addToSet`).
+  - `DELETE /cards/:cardId/likes`: Remove uma curtida de um cartão (com operador `$pull`).
+
+- **Tratamento de Erros:**
+  - Respostas padronizadas para códigos HTTP `400` (dados inválidos / ID incorreto), `404` (recurso não encontrado via `.orFail()`) e `500` ("Ocorreu um erro no servidor").
 
 ## Tecnologias e Técnicas Utilizadas
 
 - **Node.js**: Ambiente de execução do JavaScript no servidor.
-- **Express.js**: Framework para criação de rotas e gerenciamento do servidor HTTP.
-- **Nodemon**: Ferramenta de Hot Reload para reinício automático do servidor em desenvolvimento.
+- **Express.js**: Framework para criação de rotas e gestão do servidor HTTP.
+- **MongoDB & Mongoose**: Base de dados NoSQL e ODM para modelagem e validação estrita de esquemas.
+- **Arquitetura MVC**: Separação clara de responsabilidades entre modelos, rotas e controladores.
 - **ESLint (Configuração Airbnb)**: Padronização e qualidade de código.
-- **EditorConfig**: Padronização da formatação entre editores de código.
-- **Módulos Nativos Node.js (`fs` e `path`)**: Manipulação de arquivos do sistema de forma assíncrona.
+- **EditorConfig**: Uniformidade na formatação entre diferentes editores.
 
 ## Como Executar o Projeto
 
-1. Clone o repositório.
-2. Instale as dependências com `npm install`.
-3. Inicie o servidor em modo de desenvolvimento com `npm run dev`.
-4. Acesse `http://localhost:3000` no seu navegador ou via Postman.
+- Clone o repositório para a sua máquina local.
+- Instale as dependências com o comando:
+
+(npm install)
+
+- Certifique-se de que o seu servidor MongoDB local ou remoto está ativo.
+- Inicie o servidor em modo de produção:
+
+(npm run start)
+
+- Ou em modo de desenvolvimento (com recarga automática):
+
+(npm run dev)
+
+- Aceda à API através de http://localhost:3000 utilizando ferramentas como o Postman.
