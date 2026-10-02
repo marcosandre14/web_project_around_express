@@ -13,7 +13,14 @@ const app = express();
 const { PORT = 3000 } = process.env;
 
 // Conecta ao servidor MongoDB local e ao banco 'aroundb'
-mongoose.connect("mongodb://localhost:27017/aroundb");
+mongoose
+  .connect("mongodb://localhost:27017/aroundb")
+  .then(() => {
+    console.log("Conectado ao MongoDB");
+  })
+  .catch((err) => {
+    console.error("Erro ao conectar ao MongoDB:", err);
+  });
 
 // Middleware para analisar corpos de requisição em JSON
 app.use(express.json());
